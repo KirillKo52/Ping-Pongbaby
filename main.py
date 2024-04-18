@@ -19,14 +19,14 @@ clock = time.Clock()
 FPS = 60
 finish = True
 class GameSprite(sprite.Sprite):
-    def __init__(self,player_image,player_x,player_y,player_speedx,player_speedy,player_weight,player_height):
+    def __init__(self,player_image,player_x,player_y,player_speed_x,player_speed_y,player_weight,player_height):
         super().__init__()
         self.image = transform.scale(image.load(player_image),(player_weight, player_height))
-        self.speed.x = player_speedx
-        self.speed.y = player_speedy
         self.rect = self.image.get_rect()
         self.rect.x = player_x
         self.rect.y = player_y
+        self.speed_x = player_speed_x
+        self.speed_y = player_speed_y
         self.weight = player_weight
         self.height = player_height
     def reset(self):
@@ -35,31 +35,31 @@ class Player1(GameSprite):
     def update(self):
         keys_pressed = key.get_pressed()
         if keys_pressed[K_w] and self.rect.y > 0:
-            self.rect.y -= self.speed
+            self.rect.y -= self.speed_y
         if keys_pressed[K_s] and self.rect.y < 350:
-            self.rect.y += self.speed
+            self.rect.y += self.speed_y
 class Player2(GameSprite):
     def update(self):
         keys_pressed = key.get_pressed()
         if keys_pressed[K_UP] and self.rect.y > 0:
-            self.rect.y -= self.speed
+            self.rect.y -= self.speed_y
         if keys_pressed[K_DOWN] and self.rect.y < 350:
-            self.rect.y += self.speed        
+            self.rect.y += self.speed_y        
 class Ball(GameSprite):
     def update(self):
-        self.rect.y += self.speedy
-        self.rect.x += self.speedx
-        if self.rect.y = 450:
-            self.speedy * -1
-        if self.rect.y = 50:
-            self.speedy * -1
-        if self.rect.x = 70:
-            self.speedx * -1
-        if self.rect.x = 420:
-            self.speedx * -1
-player1 = Player1('player2.jpg',70,250,5,20,150)
-player2 = Player2('player2.jpg',420,250,5,20,150)
-ball = Ball('Ball.jpg',250,350,1,70,70)
+        self.rect.y += self.speed_y
+        self.rect.x += self.speed_x
+        if self.rect.y == 450:
+            self.speed_y *= -1
+        if self.rect.y == 50:
+            self.speed_y *= -1
+        if self.rect.x == 70:
+            self.speed_x *= -1
+        if self.rect.x == 420:
+            self.speed_x *= -1
+player1 = Player1('player2.jpg',70,250,0,5,20,150)
+player2 = Player2('player2.jpg',420,250,0,5,20,150)
+ball = Ball('Ball.jpg',250,350,1,1,70,70)
 while run:
     for e in event.get():
         if e.type == QUIT:
